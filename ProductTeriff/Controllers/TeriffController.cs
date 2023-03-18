@@ -17,13 +17,6 @@ namespace Verivox_Interview.Controllers
         }
 
         [HttpGet]
-        [Route("")]
-        public IActionResult Index()
-        {
-            return Ok("To compare cost model go to: /api/teriff/compare/{annual-consumption}");
-        }
-
-        [HttpGet]
         [Route("compare/{annualComsumption}")]
         public IActionResult Comparision(int annualComsumption)
         {

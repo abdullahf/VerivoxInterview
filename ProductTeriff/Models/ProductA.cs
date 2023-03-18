@@ -1,23 +1,32 @@
 ﻿namespace Verivox_Interview.Models
 {
-    public class ProductA : Product
+    public class ProductA : IProduct
     {
-        public ProductA(string name) : base(name)
-        {
-            BaseCost = 5;
-            PerKWhCost = 22;
-        }
+        public string Name { get; private set; }
+        public double BaseCost { get; private set; }
+        public double PerKWhCost { get; private set; }
+        public int AnnualConsumption { get; private set; }
+        public double AnnualCost { get; private set; }
 
-        public override Teriff CalculateAnnualCost(int consumption)
+        public ProductA(string name, int consumption, double baseCost = 5, double perKWhCost = 22)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("Proudct name cannot be null or empty");
+
             if (consumption < 0)
                 throw new ArgumentException($"Product {Name}: Consumption cannot be negative");
 
-            return new Teriff
-            {
-                Name = Name,
-                AnnualCost = Math.Round(BaseCost * 12 + (PerKWhCost * consumption) / 100, 2),
-            };
+            BaseCost = baseCost;
+            PerKWhCost = perKWhCost;
+            AnnualConsumption = consumption;
+            Name = name;
+        }
+
+        public double CalculateAnnualCost()
+        {
+            AnnualCost = Math.Round(BaseCost * 12 + (PerKWhCost * AnnualConsumption) / 100, 2);
+
+            return AnnualCost;
         }
     }
 }

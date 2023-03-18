@@ -8,10 +8,16 @@ namespace Verivox_Interview.Services
 
         public List<Teriff> GetCostModel(int annualConsumption)
         {
+            IProduct productA = new ProductA("Basic electricity teriff", annualConsumption);
+            var annualCostA = productA.CalculateAnnualCost();
+
+            IProduct productB = new ProductB("Packaged teriff", annualConsumption);
+            var annualCostB = productB.CalculateAnnualCost();
+
             return new List<Teriff>()
             {
-                new ProductA("Basic electricity teriff").CalculateAnnualCost(annualConsumption),
-                new ProductB("Packaged teriff").CalculateAnnualCost(annualConsumption),
+                new Teriff() { Name = productA.Name, AnnualCost = annualCostA },
+                new Teriff() { Name = productB.Name, AnnualCost = annualCostB },
             }.OrderBy(p => p.AnnualCost).ToList();
         }
     }
